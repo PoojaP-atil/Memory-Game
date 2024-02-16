@@ -1,0 +1,174 @@
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2dada;
+        }
+
+        .grid-container {
+            display: grid;
+            background-color: #f7efef;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4,1fr);
+            gap: 10px;
+            width: 500px;
+            height: 500px; 
+            margin: 50px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+            padding: 10px;
+        }
+
+        .grid-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        button {
+            font-size: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        button img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        button:hover img {
+            transform: scale(1.1);
+        }
+
+        button:active img {
+            transform: scale(0.9);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .control-buttons button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            width: fit-content;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .control-buttons button:hover {
+            background-color: #45a049;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item"><button onclick="changeimage('i1')" id="1"><img id="i1" src="umbrella.jpg" alt="Umbrella"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i2')" id="2"><img id="i2" src="cat.jpg" alt="cat"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i3')" id="3"><img id="i3" src="icecream.jpg" alt="Ice Cream"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i4')" id="4"><img id="i4" src="car.jpg" alt="Car"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i5')" id="5"><img id="i5" src="icecream.jpg" alt="Ice Cream"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i6')" id="6"><img id="i6" src="train.jpg" alt="train"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i7')" id="7"><img id="i7" src="butterfly.jpg" alt="Butterfly"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i8')" id="8"><img id="i8" src="umbrella.jpg" alt="Umbrella"></button></div>    
+        <div class="grid-item"><button onclick="changeimage('i9')" id="9"><img id="i9" src="ram.jpg" alt="ram"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i10')" id="10"><img id="i10" src="ship.jpg" alt="ship"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i11')" id="11"><img id="i11" src="ship.jpg" alt="ship"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i12')" id="12"><img id="i12" src="car.jpg" alt="Car"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i13')" id="13"><img id="i13" src="cat.jpg" alt="cat"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i14')" id="14"><img id="i14" src="ram.jpg" alt="ram"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i15')" id="15"><img id="i15" src="butterfly.jpg" alt="Butterfly"></button></div>
+        <div class="grid-item"><button onclick="changeimage('i16')" id="16"><img id="i16" src="train.jpg" alt="train"></button></div>         
+    </div>
+
+    <div class="control-buttons">
+        <button name="viewimage" onclick="viewimage()">View Images</button>
+        <button name="startgame" onclick="startgame()">Start Game</button>
+    </div>
+
+    <div class="message" id="message"></div>
+
+    <script>
+        var image1, image2;
+        var imageclickevent = 0;
+        var point = 0;
+        var messageElement = document.getElementById("message");
+    
+        function startgame() {
+            document.querySelectorAll('.grid-item img').forEach(img => {
+                img.style.visibility = "hidden";
+            });
+            image1 = "";
+            image2 = "";
+            imageclickevent = 0;
+            point = 0;
+            messageElement.textContent = "";
+        }
+    
+        function viewimage() {
+            document.querySelectorAll('.grid-item img').forEach(img => {
+                img.style.visibility = "visible";
+            });
+        }
+    
+        function changeimage(a) {   
+            if (imageclickevent === 0) {
+                imagevisibility(a);
+                image1 = a;
+                imageclickevent = 1;
+            } else {
+                imagevisibility(a);
+                image2 = a;
+                setTimeout(() => {
+                    checkmatch(image1, image2);
+                }, 1000);
+                imageclickevent = 0;
+            }   
+        }
+    
+        function imagevisibility(b) {
+            document.getElementById(b).style.visibility = "visible";   
+        }
+    
+        function checkmatch(image1, image2) {
+            if ((image1 == "i1" && image2 == "i8") || (image1 == "i2" && image2 == "i13") || (image1 == "i3" && image2 == "i5") || (image1 == "i4" && image2 == "i12") || (image1 == "i6" && image2 == "i16") || (image1 == "i7" && image2 == "i15") || (image1 == "i9" && image2 == "i14") || (image1 == "i10" && image2 == "i11")) {
+                point++;
+                messageElement.textContent = "Correct match. You have scored " + point;
+            } else {
+                messageElement.textContent = "Incorrect match. You have scored " + point;
+                setTimeout(() => {
+                    document.getElementById(image1).style.visibility = "hidden";
+                    document.getElementById(image2).style.visibility = "hidden";
+                }, 1000);
+            }
+            if (point == 8) {
+                messageElement.textContent = "Congratulations! You've won the game!";
+            }
+        }
+    </script>
+    </body>
+</html>
